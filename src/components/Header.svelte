@@ -21,7 +21,7 @@
         padding: 10px;
         border-bottom: $border;
         z-index: 700;
-        background-color: #2b324d;
+        background-color: $primary;
         color: white;
         height: 60px;
 

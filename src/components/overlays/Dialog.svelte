@@ -1,4 +1,4 @@
-<div class="dialog-background flex-center" on:click|self={onBackgroundClick} transition:fade={{duration: 100}}>
+<div class="dialog-background flex-center" on:click|self={onClose} transition:fade={{duration: 100}}>
     <div class="dialog flex-column {$$props.class}">
         {#if title || errors?.length}
             <div class="dialog-header">
@@ -25,44 +25,12 @@
 
 <script>
     import {ErrorBox, LoadingSpinner} from "@/components";
-    import {isMobileScreen} from "@/store/app";
-    import {CupertinoPane} from "cupertino-pane";
-    import {onMount} from "svelte";
     import {fade} from "svelte/transition";
 
     export let title = "";
     export let errors = [];
     export let loading = false;
-    export let stayOpenOnBackgroundClick = false;
     export let onClose;
-    export let dialogOnMobile = false;
-
-    let pane;
-
-    if ($isMobileScreen && !dialogOnMobile) {
-        onMount(async () => {
-            pane = new CupertinoPane(".dialog", {
-                fitHeight: true,
-                bottomClose: true,
-                fastSwipeClose: true,
-                buttonDestroy: true,
-                animationDuration: 150,
-                onDidDismiss: () => onClose()
-            });
-            await pane.present({animate: true});
-        });
-    }
-
-    function onBackgroundClick() {
-        if (!stayOpenOnBackgroundClick) {
-            if ($isMobileScreen) {
-                pane?.hide();
-                setTimeout(() => onClose(), 500);
-            } else {
-                onClose();
-            }
-        }
-    }
 </script>
 
 <style lang="scss">
@@ -134,9 +102,5 @@
             padding: $padding;
             flex-shrink: 0;
         }
-    }
-
-    :global(.cupertino-pane-wrapper .destroy-button) {
-        z-index: 1000;
     }
 </style>
