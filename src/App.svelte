@@ -1,5 +1,5 @@
 <Route path="/*">
-    <!-- <AddressList /> -->
+    <AddressList />
 </Route>
 
 {#if !$isOnline}

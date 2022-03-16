@@ -3,15 +3,13 @@
         <div class="error-icon icon flex-center">error_outline</div>
         <div class="flex-center flex-column flex-top">
             {#each errors as error}
-                <div class="error-text flex-center">{$t(error)}</div>
+                <div class="error-text flex-center">{error}</div>
             {/each}
         </div>
     </div>
 {/if}
 
 <script>
-    import {t} from "svelte-i18n";
-
     export let errors;
     export let bigMargin = false;
 </script>

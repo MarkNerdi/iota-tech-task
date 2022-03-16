@@ -4,7 +4,7 @@
     {:else if $emptyPaginator || empty}
         <div class="empty wh100 flex-center flex-column">
             <div class="icon empty-icon">{emptyIcon}</div>
-            <div class="empty-text bold">{$t(emptyTextKey)}</div>
+            <div class="empty-text bold">{emptyTextKey}</div>
         </div>
     {:else}
         <slot />
@@ -18,7 +18,6 @@
 
 <script>
     import {LoadingSpinner} from "@/components";
-    import {t} from "svelte-i18n";
 
     export let paginator = null;
     export let initialLoading = false;
