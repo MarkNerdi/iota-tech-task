@@ -24,6 +24,12 @@
     import {Route} from "tinro";
     import {addresses} from "@/store/data";
     import {Header} from "@/components";
+
+    $addresses = [
+        {name: "Savings Wallet", address: "0x47D73BA5E0EfBeC51F1eAD27758016Bc0978Bbe4", balance: 300},
+        {name: "Mamas Wallet", address: "0x5bF734D19458Ea382C6a0724E9EE0A3A1e8A3Dd0", balance: 300},
+        {name: "Wallet for daily purchases", address: "0xd4916d592e3e385A6D14bDae77903Aae306f638b", balance: 300}
+    ];
 </script>
 
 <style lang="scss">
