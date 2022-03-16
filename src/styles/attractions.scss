@@ -1,0 +1,17 @@
+.btn {
+    padding: 10px 12px !important;
+}
+
+.dropdown {
+    overflow: hidden;
+
+    .btn {
+        width: 100%;
+        min-width: 150px;
+        min-height: 35px;
+        border-radius: 0;
+        border-bottom: $border !important;
+        letter-spacing: 1px;
+        text-align: left;
+    }
+}

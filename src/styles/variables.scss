@@ -1,0 +1,59 @@
+$primary: #d3144a;
+$primaryLight: lighten($primary, 40%);
+
+$yellow: #ffffba;
+
+$green: #5dbb61;
+$errorRed: #b54a4a;
+
+$backgroundColor: white;
+$lightGrey: #e8e8e8;
+$borderColor: #e3e3e3;
+
+$textColor: #393939;
+$textColorLight: #a0a0a0;
+
+$fontFamily: Questrial, sans-serif;
+$hoverColor: rgba(0, 0, 0, 0.05);
+$border: 1px solid $borderColor;
+
+$boxShadow: 0 2px 3px rgba(0, 0, 0, 0.12), 0 2px 3px rgba(0, 0, 0, 0.24);
+$boxShadowLight: 0 1px 2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+$marketingPrimary: #cd0753;
+$marketingSecondary: #860134;
+$marketingDark: #393939;
+$marketingLight: #454545;
+$marketingColorGradient: linear-gradient(45deg, #860134 0%, #f30560 100%);
+$marketingGreyGradient: linear-gradient(45deg, #454545 0%, #1d1d1d 100%);
+
+// breakpoint mixins
+@mixin mobile {
+    @media only screen and (max-width: 767px) {
+        @content;
+    }
+}
+
+@mixin notMobile {
+    @media only screen and (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (max-width: 1199px) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media only screen and (min-width: 1200px) {
+        @content;
+    }
+}
+
+@mixin ios {
+    @supports (-webkit-touch-callout: none) {
+        @content;
+    }
+}

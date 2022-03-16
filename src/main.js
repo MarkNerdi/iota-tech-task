@@ -1,0 +1,7 @@
+import App from "./App.svelte";
+
+export const app = new App({target: document.body});
+
+String.prototype.format = function() {
+    return [...arguments].reduce((p, c) => p.replace(/%s/, c), this);
+};
