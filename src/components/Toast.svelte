@@ -1,6 +1,6 @@
 <div id="toast" on:click={hideToast} class={$toast.mode} class:toast-is-visible={toastIsActive}>{$toast.text}</div>
 
-<script>
+<script lang="ts">
     import {hideToast, toast} from "@/store/ui";
 
     $: toastIsActive = $toast.mode?.length > 0;

@@ -9,7 +9,7 @@
     </div>
 {/if}
 
-<script>
+<script lang="ts">
     export let errors;
     export let bigMargin = false;
 </script>

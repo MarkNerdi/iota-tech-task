@@ -8,7 +8,7 @@
     </BottomSheet>
 {/if}
 
-<script>
+<script lang="ts">
     import {isTabletScreen} from "@/store/app";
     import BottomSheet from "./BottomSheet.svelte";
 

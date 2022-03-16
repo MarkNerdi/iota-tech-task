@@ -2,7 +2,7 @@
     <div class="loading-spinner {color}" style="width: {size}px; height: {size}px; borderWidth: {borderWidth}px" />
 </div>
 
-<script>
+<script lang="ts">
     // "primary", "white", "dark"
     export let color = "primary";
     export let size = 30;

@@ -2,7 +2,7 @@
     <slot />
 </div>
 
-<script>
+<script lang="ts">
     import {CupertinoPane} from "cupertino-pane";
     import {onMount} from "svelte";
 

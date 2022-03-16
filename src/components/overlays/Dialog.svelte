@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<script>
+<script lang="ts">
     import {ErrorBox, LoadingSpinner} from "@/components";
     import {fade} from "svelte/transition";
 

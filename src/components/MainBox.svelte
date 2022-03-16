@@ -16,7 +16,7 @@
     {/if}
 </div>
 
-<script>
+<script lang="ts">
     import {LoadingSpinner} from "@/components";
 
     export let paginator = null;

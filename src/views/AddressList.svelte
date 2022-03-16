@@ -6,7 +6,7 @@
     <Header title="Your IOTA Wallets" />
     <div class="list-container">
         {#each $addresses as address}
-            <div class="list-item flex-row flex-space mb2">
+            <div class="list-item flex-row flex-space mb2" on:click={() => removeAddressFromStorage(address)}>
                 <p class="name">{address.name}</p>
                 <p class="address">{address.address}</p>
                 <p class="balance">{address.balance}</p>
@@ -38,29 +38,23 @@
     </Dialog>
 {/if}
 
-<script>
+<script lang="ts">
     import {Route} from "tinro";
-    import {addresses} from "@/store/data";
+    import {addAddressToStorage, addresses, removeAddressFromStorage} from "@/store/data";
     import {Button} from "attractions";
-    import {Header} from "@/components";
-    import {Dialog} from "@/components";
+    import {Header, Dialog} from "@/components";
+    import {Address} from "@/types/Address";
 
-    $addresses = [
-        {name: "Savings Wallet", address: "0x47D73BA5E0EfBeC51F1eAD27758016Bc0978Bbe4", balance: 300},
-        {name: "Mamas Wallet", address: "0x5bF734D19458Ea382C6a0724E9EE0A3A1e8A3Dd0", balance: 300},
-        {name: "Wallet for daily purchases", address: "0xd4916d592e3e385A6D14bDae77903Aae306f638b", balance: 300}
-    ];
-
-    let newAddressObj = {name: "", address: ""};
+    let newAddressObj: Address = {name: "", address: "", balance: 0};
     $: newAddressDialogOpen = false;
 
     function openAddNewAddressDialog() {
-        newAddressObj = {name: "", address: ""};
+        newAddressObj = {name: "", address: "", balance: 0};
         newAddressDialogOpen = true;
     }
 
     function addNewAddress() {
-        $addresses = [...$addresses, {...newAddressObj, balance: 0}];
+        addAddressToStorage(newAddressObj);
         newAddressDialogOpen = false;
     }
 </script>
@@ -103,14 +97,14 @@
         right: 10px;
         bottom: 10px;
         background-color: $primary;
-        width: 75px;
-        height: 75px;
+        width: 65px;
+        height: 65px;
         border-radius: 40px;
         align-items: center;
 
         .icon {
             color: white;
-            font-size: 50px;
+            font-size: 45px;
         }
     }
 </style>

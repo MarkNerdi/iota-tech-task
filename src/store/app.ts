@@ -1,7 +1,7 @@
-import {derived, writable} from "svelte/store";
+import {derived, writable, Writable} from "svelte/store";
 
-export const windowWidth = writable(window.innerWidth);
-export const isOnline = writable(navigator.onLine);
+export const windowWidth: Writable<number> = writable(window.innerWidth);
+export const isOnline: Writable<boolean> = writable(navigator.onLine);
 
 export const isMobileScreen = derived(windowWidth, $windowWidth => $windowWidth < 768);
 export const isTabletScreen = derived(windowWidth, $windowWidth => $windowWidth < 1200);

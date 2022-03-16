@@ -6,7 +6,7 @@
     </svelte:fragment>
 </Dialog>
 
-<script>
+<script lang="ts">
     import {Button} from "attractions";
     import {Dialog} from "@/components";
     import {closeConfirmDialog, confirmDialog} from "@/store/ui";

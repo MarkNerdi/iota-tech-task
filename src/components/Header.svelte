@@ -5,7 +5,7 @@
     </div>
 </header>
 
-<script>
+<script lang="ts">
     import {meta, router} from "tinro";
 
     export let title;
