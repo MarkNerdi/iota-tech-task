@@ -1,15 +1,19 @@
 <Dialog title="New Address" class="confirm-dialog" {onClose}>
     <div class="dialog-body">
-        <label for="name-input">Name</label>
-        {#if errors.name}
-            <p class="error">{errors.name}</p>
-        {/if}
-        <input id="name-input" placeholder="My wallet..." bind:value={newAddressObj.name} />
-        <label for="address-input">Address</label>
-        {#if errors.address}
-            <p class="error">{errors.address}</p>
-        {/if}
-        <input id="address-input" placeholder="atoi1qfd89..." bind:value={newAddressObj.address} />
+        <section class="mb4">
+            <label for="name-input">Name</label>
+            {#if errors.name}
+                <div class="error mb0 mt0">{errors.name}</div>
+            {/if}
+            <input id="name-input" class:error-input={errors.name} placeholder="My wallet..." bind:value={newAddressObj.name} />
+        </section>
+        <section>
+            <label for="address-input">Address</label>
+            {#if errors.address}
+                <div class="error mt1 mb0">{errors.address}</div>
+            {/if}
+            <input id="address-input" class:error-input={errors.address} placeholder="e.g.: atoi1qfd89..." bind:value={newAddressObj.address} />
+        </section>
     </div>
     <svelte:fragment slot="footer">
         <Button neutral on:click={() => onClose()}>Cancel</Button>
@@ -55,11 +59,13 @@
 </script>
 
 <style lang="scss">
+    .error-input {
+        border: 1px solid red;
+    }
+
     .error {
-        border-radius: 5px;
-        border: 2px solid red;
-        background-color: #ffd9d9;
         font-size: 0.8rem;
+        color: red;
         padding: 0 5px;
         margin: 0;
     }

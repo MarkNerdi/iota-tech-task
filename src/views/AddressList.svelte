@@ -7,7 +7,8 @@
         <div class="search-container flex-row">
             {#if searchOpen}
                 <div class="search flex-row">
-                    <select name="Address" id="" bind:value={tempFilter.category}>
+                    <select name="Address" class="pointer" id="" bind:value={tempFilter.category}>
+                        <option value={null}>Filter for...</option>
                         {#each Object.entries(FilterCategories) as category}
                             <option value={category[0]}>{category[1]}</option>
                         {/each}
@@ -19,14 +20,19 @@
                             if (event.charCode === 13) filterAddresses();
                         }} />
                     <div class="search-icon">
-                        <i class="icon" on:click={filterAddresses}>search</i>
+                        <i class="icon pointer" on:click={filterAddresses}>search</i>
                     </div>
                 </div>
             {/if}
-            <i class="icon" class:filtered={filter.category && filter.term} on:click={() => (searchOpen = !searchOpen)}>search</i>
+            <i class="icon pointer" class:filtered={filter.category && filter.term} on:click={() => (searchOpen = !searchOpen)}>search</i>
         </div>
     </Header>
     <div class="list-container">
+        <div class="title-row flex-row flex-center flex-space">
+            <p class="name">Name</p>
+            <p class="address">Address</p>
+            <p class="balance">Balance</p>
+        </div>
         {#each filteredAddresses as address}
             <div class="list-item flex-row flex-center flex-space mb2" on:click={() => removeAddress(address)}>
                 <p class="name">{address.name}</p>
@@ -101,16 +107,21 @@
         .search {
             position: absolute;
             width: 100%;
+            max-width: 1000px;
             height: 60px;
             padding: 10px;
-            left: 0;
+            right: 0;
             top: 0;
 
             select {
-                width: 40%;
-                font-size: 12px;
+                width: 30%;
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
+
+                @include mobile {
+                    width: 40%;
+                    font-size: 12px;
+                }
             }
 
             input {
@@ -151,28 +162,40 @@
         padding: 10px;
         max-width: 1200px;
 
+        .title-row {
+            p {
+                padding: 0 10px;
+
+                @include mobile {
+                    font-size: 0.85rem;
+                }
+            }
+        }
+
         .list-item {
             border-radius: 5px;
             box-shadow: $boxShadowLight;
-            text-align: center;
 
             p {
-                font-size: 0.85rem;
                 padding: 10px;
-            }
 
-            .name {
-                width: 20%;
+                @include mobile {
+                    font-size: 0.85rem;
+                }
             }
+        }
 
-            .address {
-                width: 60%;
-                word-wrap: break-word;
-            }
+        .name {
+            width: 20%;
+        }
 
-            .balance {
-                width: 20%;
-            }
+        .address {
+            width: 60%;
+            word-wrap: break-word;
+        }
+
+        .balance {
+            width: 20%;
         }
 
         .empty {

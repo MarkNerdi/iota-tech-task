@@ -1,5 +1,5 @@
 import {ConfirmDialog} from '@/types';
-import {Writable, writable} from "svelte/store";
+import {get, Writable, writable} from "svelte/store";
 
 export const confirmDialog: Writable<ConfirmDialog> = writable({
     title: null,
@@ -20,12 +20,7 @@ export function openConfirmDialog(payload) {
 }
 
 export function closeConfirmDialog() {
-    confirmDialog.set({
-        title: null,
-        content: null,
-        action: null,
-        isActive: null
-    });
+    confirmDialog.set({...get(confirmDialog), isActive: false});
 }
 
 export function showSuccessToast(text) {
