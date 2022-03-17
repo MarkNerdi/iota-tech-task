@@ -10,7 +10,7 @@
     import {isOnline} from "@/store/app";
     import AddressList from "@/views/AddressList.svelte";
     import {Route} from "tinro";
-    import {addAddressToStorage, addAndSaveAddressToStorage} from "./store/data";
+    import {addAddressToStorage, addAndSaveAddressToStorage, fetchAllBalances} from "./store/data";
     import {getLocalStorageItem} from "./utils/localStorage";
 
     window.addEventListener("online", () => ($isOnline = true));
@@ -26,16 +26,23 @@
     async function init() {
         if (savedAddresses.length === 0) {
             for (const addr of dummyAddresses) {
-                addAndSaveAddressToStorage(addr);
+                await addAndSaveAddressToStorage(addr);
             }
         } else {
             for (const addr of savedAddresses) {
-                addAddressToStorage(addr);
+                await addAddressToStorage(addr);
             }
         }
+        fetchAllBalances();
+    }
+
+    function polling() {
+        fetchAllBalances();
+        setTimeout(polling, 5000);
     }
 
     init();
+    setTimeout(polling, 5000);
 </script>
 
 <style lang="scss" global>

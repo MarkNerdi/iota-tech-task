@@ -24,3 +24,14 @@ export function removeAddressFromStorage(address: Address) {
     setLocalStorageItem("addresses", newAddresses)
     addresses.set(newAddresses);
 }
+
+export async function fetchAllBalances() {
+    const newAddresses: Address[] = []
+    for (let i = 0; i < get(addresses).length; i++) {
+        const addr = get(addresses)[i];
+        const balance = await getBalanceOfIOTAAddress(addr.address);
+        addr.balance = balance;
+        newAddresses.push(addr);
+    }
+    addresses.set(newAddresses);
+}

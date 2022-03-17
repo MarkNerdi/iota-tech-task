@@ -21,8 +21,7 @@
         "tinro": "^0.6.10",
         "typescript": "^4.6.2",
         "vite": "^2.7.10",
-        "vite-plugin-pwa": "^0.11.12",
-        "zeromq": "^5.2.8"
+        "vite-plugin-pwa": "^0.11.12"
     },
     "dependencies": {
         "@iota/iota.js": "^1.8.6",
