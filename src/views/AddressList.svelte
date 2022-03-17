@@ -40,7 +40,7 @@
 
 <script lang="ts">
     import {Route} from "tinro";
-    import {addAddressToStorage, addresses, removeAddressFromStorage} from "@/store/data";
+    import {addAndSaveAddressToStorage, addresses, removeAddressFromStorage} from "@/store/data";
     import {Button} from "attractions";
     import {Header, Dialog} from "@/components";
     import {Address} from "@/types/Address";
@@ -54,7 +54,7 @@
     }
 
     function addNewAddress() {
-        addAddressToStorage(newAddressObj);
+        addAndSaveAddressToStorage(newAddressObj);
         newAddressDialogOpen = false;
     }
 </script>

@@ -1,14 +1,22 @@
 import {get, writable, Writable} from "svelte/store";
 import {Address} from '../types/Address';
 import {setLocalStorageItem} from '../utils/localStorage';
+import {getBalanceOfIOTAAddress} from "../utils/addressUtils";
 
 
 export const addresses: Writable<Address[]> = writable([]);
 
-export function addAddressToStorage(address: Address) {
+export async function addAddressToStorage(address: Address) {
+    const balance = await getBalanceOfIOTAAddress(address.address);
+    address.balance = balance;
     const newAddresses: Address[] = [...get(addresses), address];
-    setLocalStorageItem("addresses", newAddresses)
     addresses.set(newAddresses);
+    return newAddresses;
+}
+
+export async function addAndSaveAddressToStorage(address: Address) {
+    const newAddresses = await addAddressToStorage(address);
+    setLocalStorageItem("addresses", newAddresses)
 }
 
 export function removeAddressFromStorage(address: Address) {
