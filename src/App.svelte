@@ -33,7 +33,6 @@
                 await addAddressToStorage(addr);
             }
         }
-        fetchAllBalances();
     }
 
     function polling() {

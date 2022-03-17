@@ -19,7 +19,6 @@
         width: 100%;
         flex-shrink: 0;
         padding: 10px;
-        border-bottom: $border;
         z-index: 700;
         background-color: $primary;
         color: white;
@@ -39,10 +38,6 @@
             :global(.button) {
                 margin-top: 0;
                 margin-bottom: 0;
-            }
-
-            @include mobile {
-                padding-right: 10px;
             }
         }
 

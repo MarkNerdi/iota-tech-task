@@ -1,13 +1,13 @@
 import {get, writable, Writable} from "svelte/store";
-import {Address} from '../types/Address';
+import {Address} from '../types';
 import {setLocalStorageItem} from '../utils/localStorage';
-import {getBalanceOfIOTAAddress} from "../utils/addressUtils";
+import {getBalanceOfIotaAddress} from "../utils/addressUtils";
 
 
 export const addresses: Writable<Address[]> = writable([]);
 
 export async function addAddressToStorage(address: Address) {
-    const balance = await getBalanceOfIOTAAddress(address.address);
+    const balance = await getBalanceOfIotaAddress(address.address);
     address.balance = balance;
     const newAddresses: Address[] = [...get(addresses), address];
     addresses.set(newAddresses);
@@ -29,7 +29,7 @@ export async function fetchAllBalances() {
     const newAddresses: Address[] = []
     for (let i = 0; i < get(addresses).length; i++) {
         const addr = get(addresses)[i];
-        const balance = await getBalanceOfIOTAAddress(addr.address);
+        const balance = await getBalanceOfIotaAddress(addr.address);
         addr.balance = balance;
         newAddresses.push(addr);
     }
