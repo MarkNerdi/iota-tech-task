@@ -28,7 +28,7 @@
     </Header>
     <div class="list-container">
         {#each filteredAddresses as address}
-            <div class="list-item flex-row flex-center flex-space mb2" on:click={() => removeAddressFromStorage(address)}>
+            <div class="list-item flex-row flex-center flex-space mb2" on:click={() => removeAddress(address)}>
                 <p class="name">{address.name}</p>
                 <p class="address">{address.address}</p>
                 <p class="balance">{address.balance}</p>
@@ -54,8 +54,9 @@
     import {addresses, removeAddressFromStorage} from "@/store/data";
     import {Header} from "@/components";
     import AddNewAddressDialog from "@/components/dialogs/AddNewAddressDialog.svelte";
-    import {Filter} from "@/types";
+    import {Address, Filter} from "@/types";
     import {FilterCategories} from "@/enums";
+    import {openConfirmDialog, showSuccessToast} from "@/store/ui";
 
     let newAddressDialogOpen: boolean = false;
     let searchOpen: boolean = false;
@@ -77,12 +78,20 @@
         }
     });
 
-    function filterAddresses() {
+    function filterAddresses(): void {
         filter = {...tempFilter};
         searchOpen = false;
     }
 
-    function openAddNewAddressDialog() {
+    function removeAddress(address: Address): void {
+        openConfirmDialog({
+            title: "Remove Address",
+            content: `Do you really want to remove the address from '${address.name}'? This cannot be reverted.`,
+            action: () => removeAddressFromStorage(address)
+        });
+    }
+
+    function openAddNewAddressDialog(): void {
         newAddressDialogOpen = true;
     }
 </script>

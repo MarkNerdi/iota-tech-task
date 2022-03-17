@@ -2,6 +2,12 @@
     <AddressList />
 </Route>
 
+{#if $confirmDialog.isActive}
+    <ConfirmDialog />
+{/if}
+
+<Toast />
+
 {#if !$isOnline}
     <div id="offline-banner" class="flex-center">You're offline. Please connect to the internet</div>
 {/if}
@@ -13,6 +19,8 @@
     import {addAddressToStorage, addAndSaveAddressToStorage, fetchAllBalances} from "./store/data";
     import {Address} from "./types";
     import {getLocalStorageItem} from "./utils/localStorage";
+    import {confirmDialog} from "@/store/ui";
+    import {ConfirmDialog, Toast} from "@/components";
 
     window.addEventListener("online", () => ($isOnline = true));
     window.addEventListener("offline", () => ($isOnline = false));

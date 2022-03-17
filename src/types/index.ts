@@ -15,3 +15,10 @@ export interface Address {
     address: string;
     balance: number;
 }
+
+export interface ConfirmDialog {
+    content: string;
+    action: Function;
+    title: string;
+    isActive: boolean;
+}
