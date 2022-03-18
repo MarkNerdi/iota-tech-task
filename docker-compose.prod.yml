@@ -1,0 +1,21 @@
+version: "3.2"
+
+networks:
+  proxy:
+    external: true
+
+services:
+  svelte:
+    build:
+      context: ./
+      dockerfile: Dockerfile.prod
+    container_name: iota_svelte
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.iota-svelte.tls=true"
+      - "traefik.http.routers.iota-svelte.rule=Host(`iota.crewup.dev`)"
+      - "traefik.http.routers.iota-svelte.entrypoints=websecure"
+      - "traefik.http.routers.iota-svelte.tls.certresolver=myhttpchallenge"
