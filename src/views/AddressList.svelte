@@ -28,12 +28,14 @@
         </div>
     </Header>
     <div class="list-container">
-        <div class="title-row flex-row flex-center flex-space">
-            <p class="name pointer {getOrder(OrderCategories.NAME)}" on:click={() => setOrdering(OrderCategories.NAME)}>Name</p>
-            <p class="address pointer {getOrder(OrderCategories.ADDRESS)}" on:click={() => setOrdering(OrderCategories.ADDRESS)}>Address</p>
-            <p class="balance pointer {getOrder(OrderCategories.BALANCE)}" on:click={() => setOrdering(OrderCategories.BALANCE)}>Balance</p>
-            <div class="button" />
-        </div>
+        {#if filteredAddresses.length > 0}
+            <div class="title-row flex-row flex-center flex-space">
+                <p class="name pointer {getOrder(OrderCategories.NAME)}" on:click={() => setOrdering(OrderCategories.NAME)}>Name</p>
+                <p class="address pointer {getOrder(OrderCategories.ADDRESS)}" on:click={() => setOrdering(OrderCategories.ADDRESS)}>Address</p>
+                <p class="balance pointer {getOrder(OrderCategories.BALANCE)}" on:click={() => setOrdering(OrderCategories.BALANCE)}>Balance</p>
+                <div class="button" />
+            </div>
+        {/if}
         {#each filteredAddresses as address}
             <div class="list-item flex-row flex-center flex-space mb2" class:pointer={$isMobileScreen}>
                 <p class="name">{address.name}</p>
@@ -103,9 +105,9 @@
         .filter(addr => {
             switch (FilterCategories[filter.category]) {
                 case FilterCategories.NAME:
-                    return addr.name.toLowerCase().includes(filter.term.toLowerCase());
+                    return addr.name.toLowerCase().includes(filter.term?.toLowerCase());
                 case FilterCategories.ADDRESS:
-                    return addr.address.toLowerCase().includes(filter.term.toLowerCase());
+                    return addr.address.toLowerCase().includes(filter.term?.toLowerCase());
                 case FilterCategories.BALANCE_BIGGER:
                     return !parseInt(filter.term) || addr.balance >= parseInt(filter.term);
                 case FilterCategories.BALANCE_SMALLER:
@@ -317,7 +319,11 @@
 
         .empty {
             width: 100%;
-            height: 100%;
+            height: 80%;
+
+            @include mobile {
+                height: 100%;
+            }
         }
     }
 
