@@ -20,7 +20,7 @@
 </Dialog>
 
 <script lang="ts">
-    import {addAndSaveAddressToStorage} from "@/store/data";
+    import {addAndSaveAddressToStorage, addresses} from "@/store/data";
     import {Button} from "attractions";
     import {Dialog} from "@/components";
     import {Address} from "@/types";
@@ -47,6 +47,8 @@
             errors.address = "must BECH32 standard!";
         } else if (newAddressObj.address.length < 12) {
             errors.address = "must be at least 12 letters long!";
+        } else if ($addresses.some(addr => addr.address === newAddressObj.address)) {
+            errors.address = "must be unique!";
         }
     }
 
