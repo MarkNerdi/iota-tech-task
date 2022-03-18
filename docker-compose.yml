@@ -1,0 +1,15 @@
+version: "3.2"
+
+services:
+  svelte:
+    build: ./
+    container_name: iota_svelte
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./public:/usr/src/app/public
+      - ./index.html:/usr/src/app/index.html
+      - ./svelte.config.js:/usr/src/app/svelte.config.js
+      - ./vite.config.js:/usr/src/app/vite.config.js
+    command: npm run dev
+    ports:
+      - "3000:3000"

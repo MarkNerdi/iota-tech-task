@@ -1,5 +1,5 @@
 <svelte:head>
-    <title>Wallet List</title>
+    <title>Your IOTA Wallet</title>
 </svelte:head>
 
 <div id="address-list" class="flex-column flex-center wh100">
@@ -107,9 +107,9 @@
                 case FilterCategories.ADDRESS:
                     return addr.address.toLowerCase().includes(filter.term.toLowerCase());
                 case FilterCategories.BALANCE_BIGGER:
-                    return addr.balance >= parseInt(filter.term);
+                    return !parseInt(filter.term) || addr.balance >= parseInt(filter.term);
                 case FilterCategories.BALANCE_SMALLER:
-                    return addr.balance <= parseInt(filter.term);
+                    return !parseInt(filter.term) || addr.balance <= parseInt(filter.term);
                 default:
                     return true;
             }
