@@ -29,12 +29,12 @@
     </Header>
     <div class="list-container">
         <div class="title-row flex-row flex-center flex-space">
-            <p class="name">Name</p>
-            <p class="address">Address</p>
-            <p class="balance">Balance</p>
+            <p class="name pointer {getOrder(OrderCategories.NAME)}" on:click={() => setOrdering(OrderCategories.NAME)}>Name</p>
+            <p class="address pointer {getOrder(OrderCategories.ADDRESS)}" on:click={() => setOrdering(OrderCategories.ADDRESS)}>Address</p>
+            <p class="balance pointer {getOrder(OrderCategories.BALANCE)}" on:click={() => setOrdering(OrderCategories.BALANCE)}>Balance</p>
         </div>
         {#each filteredAddresses as address}
-            <div class="list-item flex-row flex-center flex-space mb2" on:click={() => removeAddress(address)}>
+            <div class="list-item flex-row flex-center flex-space pointer mb2" on:click={() => removeAddress(address)}>
                 <p class="name">{address.name}</p>
                 <p class="address">{address.address}</p>
                 <p class="balance">{address.balance}</p>
@@ -46,9 +46,6 @@
     <div class="floating-action-button flex-center" on:click={openAddNewAddressDialog}>
         <i class="icon">add</i>
     </div>
-    <Route path="/address/">
-        <!-- TODO: <AddressDetail />  -->
-    </Route>
 </div>
 
 {#if newAddressDialogOpen}
@@ -56,44 +53,70 @@
 {/if}
 
 <script lang="ts">
-    import {Route} from "tinro";
     import {addresses, removeAddressFromStorage} from "@/store/data";
     import {Header} from "@/components";
     import AddNewAddressDialog from "@/components/dialogs/AddNewAddressDialog.svelte";
-    import {Address, Filter} from "@/types";
-    import {FilterCategories} from "@/enums";
+    import {Address, Filter, Ordering} from "@/types";
+    import {FilterCategories, OrderCategories, Orders} from "@/enums";
     import {openConfirmDialog, showSuccessToast} from "@/store/ui";
 
     let newAddressDialogOpen: boolean = false;
     let searchOpen: boolean = false;
+    let ordering: Ordering = {category: null, order: Orders.NONE};
     let filter: Filter = {category: null, term: null};
     let tempFilter: Filter = {category: null, term: null};
+    let filteredAddresses: Address[];
 
-    $: filteredAddresses = $addresses.filter(addr => {
-        switch (FilterCategories[filter.category]) {
-            case FilterCategories.NAME:
-                return addr.name.toLowerCase().includes(filter.term.toLowerCase());
-            case FilterCategories.ADDRESS:
-                return addr.address.toLowerCase().includes(filter.term.toLowerCase());
-            case FilterCategories.BALANCE_BIGGER:
-                return addr.balance >= parseInt(filter.term);
-            case FilterCategories.BALANCE_SMALLER:
-                return addr.balance <= parseInt(filter.term);
-            default:
-                return true;
-        }
-    });
+    $: filteredAddresses = $addresses
+        .filter(addr => {
+            switch (FilterCategories[filter.category]) {
+                case FilterCategories.NAME:
+                    return addr.name.toLowerCase().includes(filter.term.toLowerCase());
+                case FilterCategories.ADDRESS:
+                    return addr.address.toLowerCase().includes(filter.term.toLowerCase());
+                case FilterCategories.BALANCE_BIGGER:
+                    return addr.balance >= parseInt(filter.term);
+                case FilterCategories.BALANCE_SMALLER:
+                    return addr.balance <= parseInt(filter.term);
+                default:
+                    return true;
+            }
+        })
+        .sort((addr1, addr2) => {
+            const val1 = addr1[ordering.category];
+            const val2 = addr2[ordering.category];
+            if (ordering.order === Orders.ASC) {
+                return val1 >= val2 ? 1 : -1;
+            } else if (ordering.order === Orders.DESC) {
+                return val1 <= val2 ? 1 : -1;
+            } else {
+                return 0;
+            }
+        });
+
+    $: getOrder = (category: OrderCategories): string => (ordering.category === category ? `order_${ordering.order}` : "");
 
     function filterAddresses(): void {
         filter = {...tempFilter};
         searchOpen = false;
     }
 
+    function setOrdering(category: OrderCategories): void {
+        if (ordering.category === category) {
+            ordering = {category: ordering.category, order: (ordering.order + 1) % 3};
+        } else {
+            ordering = {category: category, order: Orders.DESC};
+        }
+    }
+
     function removeAddress(address: Address): void {
         openConfirmDialog({
             title: "Remove Address",
             content: `Do you really want to remove the address from '${address.name}'? This cannot be reverted.`,
-            action: () => removeAddressFromStorage(address)
+            action: () => {
+                removeAddressFromStorage(address);
+                showSuccessToast("Address removed");
+            }
         });
     }
 
@@ -151,7 +174,7 @@
                 background-color: white;
                 color: $primary;
                 font-weight: 700;
-                border-radius: 20px;
+                border-radius: 5px;
             }
         }
     }
@@ -165,10 +188,24 @@
         .title-row {
             p {
                 padding: 0 10px;
+                user-select: none;
 
                 @include mobile {
                     font-size: 0.85rem;
                 }
+            }
+
+            ::after {
+                font-family: Material Icons, sans-serif;
+                vertical-align: text-bottom;
+            }
+
+            .order_1::after {
+                content: "arrow_drop_down";
+            }
+
+            .order_2::after {
+                content: "arrow_drop_up";
             }
         }
 

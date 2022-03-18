@@ -1,17 +1,15 @@
 <Dialog title="New Address" class="confirm-dialog" {onClose}>
     <div class="dialog-body">
         <section class="mb4">
-            <label for="name-input">Name</label>
-            {#if errors.name}
-                <div class="error mb0 mt0">{errors.name}</div>
-            {/if}
+            <label for="name-input">
+                Name {#if errors.name}<span class="error">{errors.name}</span>{/if}
+            </label>
             <input id="name-input" class:error-input={errors.name} placeholder="My wallet..." bind:value={newAddressObj.name} />
         </section>
         <section>
-            <label for="address-input">Address</label>
-            {#if errors.address}
-                <div class="error mt1 mb0">{errors.address}</div>
-            {/if}
+            <label for="address-input">
+                Address {#if errors.address}<span class="error">{errors.address}</span>{/if}
+            </label>
             <input id="address-input" class:error-input={errors.address} placeholder="e.g.: atoi1qfd89..." bind:value={newAddressObj.address} />
         </section>
     </div>
@@ -27,6 +25,7 @@
     import {Dialog} from "@/components";
     import {Address} from "@/types";
     import {Bech32Helper} from "@iota/iota.js";
+    import {showSuccessToast} from "@/store/ui";
 
     export let onClose: Function;
 
@@ -35,17 +34,19 @@
 
     function validateAddress() {
         errors = {name: "", address: ""};
+        newAddressObj.name = newAddressObj.name.trim();
+        newAddressObj.address = newAddressObj.address.trim();
         if (!newAddressObj.name) {
-            errors.name = "Name must not be empty!";
+            errors.name = "must not be empty!";
         }
         if (!newAddressObj.address) {
-            errors.address = "Address must not be empty!";
+            errors.address = "must not be empty!";
         } else if (!newAddressObj.address.startsWith("atoi1")) {
-            errors.address = "Address must start with atoi1!";
+            errors.address = "must start with atoi1!";
         } else if (!Bech32Helper.matches(newAddressObj.address, Bech32Helper.BECH32_DEFAULT_HRP_DEV)) {
-            errors.address = "Address must BECH32 standard!";
+            errors.address = "must BECH32 standard!";
         } else if (newAddressObj.address.length < 12) {
-            errors.address = "Address must be at least 12 letters long!";
+            errors.address = "must be at least 12 letters long!";
         }
     }
 
@@ -53,6 +54,7 @@
         validateAddress();
         if (!errors.name && !errors.address) {
             await addAndSaveAddressToStorage(newAddressObj);
+            showSuccessToast("Address added");
             onClose();
         }
     }
