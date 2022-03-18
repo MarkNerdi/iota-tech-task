@@ -14,9 +14,3 @@ export function setLocalStorageItem(key, value) {
 export function removeLocalStorageItems(...keys) {
     keys.forEach(key => localStorage.removeItem(prefix + key));
 }
-
-export const LocalStorageKey = {
-    TOKEN: "TOKEN",
-    LANGUAGE: "LANGUAGE",
-    SECURITY_KEY: "SECURITY_KEY"
-};
