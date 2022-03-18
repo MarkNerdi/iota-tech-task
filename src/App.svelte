@@ -13,7 +13,7 @@
 {/if}
 
 <script lang="ts">
-    import {isOnline} from "@/store/app";
+    import {isOnline, windowWidth} from "@/store/app";
     import AddressList from "@/views/AddressList.svelte";
     import {Route} from "tinro";
     import {addAddressToStorage, addAndSaveAddressToStorage, fetchAllBalances} from "./store/data";
@@ -22,6 +22,7 @@
     import {confirmDialog} from "@/store/ui";
     import {ConfirmDialog, Toast} from "@/components";
 
+    window.addEventListener("resize", () => ($windowWidth = window.innerWidth));
     window.addEventListener("online", () => ($isOnline = true));
     window.addEventListener("offline", () => ($isOnline = false));
 

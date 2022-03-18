@@ -32,12 +32,39 @@
             <p class="name pointer {getOrder(OrderCategories.NAME)}" on:click={() => setOrdering(OrderCategories.NAME)}>Name</p>
             <p class="address pointer {getOrder(OrderCategories.ADDRESS)}" on:click={() => setOrdering(OrderCategories.ADDRESS)}>Address</p>
             <p class="balance pointer {getOrder(OrderCategories.BALANCE)}" on:click={() => setOrdering(OrderCategories.BALANCE)}>Balance</p>
+            <div class="button" />
         </div>
         {#each filteredAddresses as address}
-            <div class="list-item flex-row flex-center flex-space pointer mb2" on:click={() => removeAddress(address)}>
+            <div class="list-item flex-row flex-center flex-space mb2" class:pointer={$isMobileScreen}>
                 <p class="name">{address.name}</p>
-                <p class="address">{address.address}</p>
+                <p class="address">
+                    {address.address}
+                    {#if !$isMobileScreen}
+                        <i class="icon pointer ml1" on:click={() => copyAddress(address.address)}>content_copy</i>
+                    {/if}
+                </p>
                 <p class="balance">{address.balance}</p>
+                <div class="button flex-center">
+                    {#if !$isMobileScreen}
+                        <i class="icon remove pointer" on:click={() => removeAddress(address)}>clear</i>
+                    {:else}
+                        <DropdownShell let:toggle>
+                            <i class="icon pointer" on:click={toggle}>more_vert</i>
+                            <Dropdown right>
+                                <div on:click={toggle}>
+                                    <p class="flex-row flex-center flex-left" on:click={() => copyAddress(address.address)}>
+                                        <i class="icon mr1">content_copy</i>
+                                        Copy to clipboard
+                                    </p>
+                                    <p class="flex-row flex-center flex-left" on:click={() => removeAddress(address)}>
+                                        <i class="icon mr1">clear</i>
+                                        Delete
+                                    </p>
+                                </div>
+                            </Dropdown>
+                        </DropdownShell>
+                    {/if}
+                </div>
             </div>
         {:else}
             <div class="empty">No Addresses found</div>
@@ -59,6 +86,9 @@
     import {Address, Filter, Ordering} from "@/types";
     import {FilterCategories, OrderCategories, Orders} from "@/enums";
     import {openConfirmDialog, showSuccessToast} from "@/store/ui";
+    import copy from "copy-to-clipboard";
+    import {isMobileScreen} from "@/store/app";
+    import {Dropdown, DropdownShell} from "attractions";
 
     let newAddressDialogOpen: boolean = false;
     let searchOpen: boolean = false;
@@ -118,6 +148,11 @@
                 showSuccessToast("Address removed");
             }
         });
+    }
+
+    function copyAddress(addr: string): void {
+        copy(addr);
+        showSuccessToast("Copied to clipboard");
     }
 
     function openAddNewAddressDialog(): void {
@@ -212,9 +247,14 @@
         .list-item {
             border-radius: 5px;
             box-shadow: $boxShadowLight;
+            padding-left: 10px;
+
+            @include mobile {
+                padding-left: 0;
+            }
 
             p {
-                padding: 10px;
+                padding: 5px 10px;
 
                 @include mobile {
                     font-size: 0.85rem;
@@ -228,11 +268,38 @@
 
         .address {
             width: 60%;
-            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            .icon {
+                display: inline;
+                font-size: 1.1rem;
+                color: grey;
+            }
         }
 
         .balance {
-            width: 20%;
+            width: 10%;
+
+            @include mobile {
+                width: 20%;
+            }
+        }
+
+        .button {
+            width: 10%;
+
+            .remove {
+                width: 40px;
+                color: $errorRed;
+                height: 40px;
+            }
+
+            p {
+                font-size: 1rem;
+                margin: 0;
+                padding: 10px 15px;
+            }
         }
 
         .empty {

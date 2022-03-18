@@ -62,12 +62,12 @@
 
 <style lang="scss">
     .error-input {
-        border: 1px solid red;
+        border: 1px solid $errorRed;
     }
 
     .error {
         font-size: 0.8rem;
-        color: red;
+        color: $errorRed;
         padding: 0 5px;
         margin: 0;
     }

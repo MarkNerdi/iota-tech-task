@@ -26,6 +26,7 @@
     "dependencies": {
         "@iota/iota.js": "^1.8.6",
         "attractions": "^3.7.0",
+        "copy-to-clipboard": "^3.3.1",
         "cupertino-pane": "^1.2.8"
     }
 }

@@ -39,6 +39,7 @@ async function generateIotaAddresses() {
 
 export async function getBalanceOfIotaAddress(address: string): Promise<number> {
     const addrInBytes = Bech32Helper.fromBech32(address, Bech32Helper.BECH32_DEFAULT_HRP_DEV);
+    if (!addrInBytes) return 0;
     const hexAddr = Converter.bytesToHex(addrInBytes.addressBytes);
     const response = await client.addressEd25519(hexAddr);
     return response.balance;
