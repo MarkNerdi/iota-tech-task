@@ -49,7 +49,7 @@
                         <i class="icon remove pointer" on:click={() => removeAddress(address)}>clear</i>
                     {:else}
                         <DropdownShell let:toggle>
-                            <i class="icon pointer" on:click={toggle}>more_vert</i>
+                            <i class="icon more" on:click={toggle}>more_vert</i>
                             <Dropdown right>
                                 <div on:click={toggle}>
                                     <p class="flex-row flex-center flex-left" on:click={() => copyAddress(address.address)}>
@@ -69,9 +69,11 @@
         {:else}
             <div class="empty">No Addresses found</div>
         {/each}
-    </div>
-    <div class="floating-action-button flex-center" on:click={openAddNewAddressDialog}>
-        <i class="icon">add</i>
+        <div class="flex-center">
+            <div class="floating-action-button pointer flex-center" on:click={openAddNewAddressDialog}>
+                <i class="icon">add</i>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -218,12 +220,15 @@
         width: 100%;
         height: 100%;
         padding: 10px;
+        padding-bottom: 70px;
         max-width: 1200px;
+        overflow: auto;
 
         .title-row {
             p {
                 padding: 0 10px;
                 user-select: none;
+                color: grey;
 
                 @include mobile {
                     font-size: 0.85rem;
@@ -248,6 +253,7 @@
             border-radius: 5px;
             box-shadow: $boxShadowLight;
             padding-left: 10px;
+            height: 70px;
 
             @include mobile {
                 padding-left: 0;
@@ -257,7 +263,7 @@
                 padding: 5px 10px;
 
                 @include mobile {
-                    font-size: 0.85rem;
+                    font-size: 0.9rem;
                 }
             }
         }
@@ -295,6 +301,10 @@
                 height: 40px;
             }
 
+            .more {
+                color: grey;
+            }
+
             p {
                 font-size: 1rem;
                 margin: 0;
@@ -309,18 +319,27 @@
     }
 
     .floating-action-button {
-        position: fixed;
-        right: 10px;
-        bottom: 10px;
         background-color: $primary;
         width: 65px;
         height: 65px;
         border-radius: 40px;
         align-items: center;
 
+        @include mobile {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            width: 55px;
+            height: 55px;
+        }
+
         .icon {
             color: white;
             font-size: 45px;
+
+            @include mobile {
+                font-size: 37px;
+            }
         }
     }
 </style>
