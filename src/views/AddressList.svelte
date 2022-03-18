@@ -115,8 +115,11 @@
             }
         })
         .sort((addr1, addr2) => {
-            const val1 = addr1[ordering.category];
-            const val2 = addr2[ordering.category];
+            let val1 = addr1[ordering.category];
+            let val2 = addr2[ordering.category];
+            if (typeof val1 == "string") val1 = val1.toLowerCase();
+            if (typeof val2 == "string") val2 = val2.toLowerCase();
+
             if (ordering.order === Orders.ASC) {
                 return val1 >= val2 ? 1 : -1;
             } else if (ordering.order === Orders.DESC) {
