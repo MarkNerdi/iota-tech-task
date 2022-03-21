@@ -34,6 +34,7 @@
     const savedAddresses: Address[] = getLocalStorageItem("addresses", []);
 
     async function init() {
+        // Insert demo data
         if (savedAddresses.length === 0) {
             for (const addr of dummyAddresses) {
                 await addAndSaveAddressToStorage(addr);

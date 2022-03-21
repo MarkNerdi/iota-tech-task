@@ -69,10 +69,10 @@
                 </div>
             </div>
         {:else}
-            <div class="empty">No Addresses found</div>
+            <div class="empty">No Addresses inserted</div>
         {/each}
         <div class="flex-center">
-            <div class="floating-action-button pointer flex-center" on:click={openAddNewAddressDialog}>
+            <div class="floating-action-button pointer flex-center" on:click={() => (newAddressDialogOpen = true)}>
                 <i class="icon">add</i>
             </div>
         </div>
@@ -160,10 +160,6 @@
     function copyAddress(addr: string): void {
         copy(addr);
         showSuccessToast("Copied to clipboard");
-    }
-
-    function openAddNewAddressDialog(): void {
-        newAddressDialogOpen = true;
     }
 </script>
 

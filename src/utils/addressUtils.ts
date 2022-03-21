@@ -4,6 +4,8 @@ import {Bech32Helper, Ed25519Address, Ed25519Seed, ED25519_ADDRESS_TYPE, generat
 
 const client = new SingleNodeClient("https://api.lb-0.h.chrysalis-devnet.iota.cafe");
 
+
+// Only used to generate some demo data 
 async function generateIotaAddresses() {
 
     const info = await client.info();
